@@ -19,7 +19,12 @@ def index():
             }).execute()
         return redirect(url_for('main.index'))
 
-    respons = supabase.table('user_data').select('*').order('id', desc=False).execute()
+    try:
+        respons = supabase.table('user_data').select('*').order('id', desc=False).execute()
+        data_hasil = respons.data
+    except Exception as e:
+        print(f"Error fetching data: {str(e)}")
+        data_hasil = []
     return render_template('main.html', data_pengguna=respons.data, pengguna_edit=None)
 
 @main_bp.route('/edit/<int:id>', methods=['GET'])
