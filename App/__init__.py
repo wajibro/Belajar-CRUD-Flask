@@ -4,7 +4,7 @@ from flask import Flask
 from supabase import create_client, Client
 from config import Config
 
-supabase: Client = create_client(Config.DB_URL, Config.DB_KEY)
+supabase = create_client(Config.DB_URL, Config.DB_KEY)
 
 def create_app():
     app = Flask(__name__)
