@@ -25,22 +25,23 @@ def index():
     except Exception as e:
         print(f"Error fetching data: {str(e)}")
         data_hasil = []
-    return render_template('main.html', data_pengguna=respons.data, pengguna_edit=None)
 
-@main_bp.route('/edit/<int:id>', methods=['GET'])
+    return render_template('main.html', data_pengguna=data_hasil, pengguna_edit=None)
+
+@main_bp.route('/edit/<id>', methods=['GET'])
 def edit_form(id):
     respons_all = supabase.table('user_data').select('*').order('id', desc=False).execute()
-    respons_single = supabase.table('user_data').select('*').order('id', id).execute()
+    respons_single = supabase.table('user_data').select('*').eq('id', id).execute()
 
     if not respons_single.data:
         return "Data tidak ditemukan", 404
 
     return render_template('main.html', data_pengguna=respons_all.data, pengguna_edit=respons_single.data[0])
 
-@main_bp.route('/update/<int:id>', methods=['POST'])
+@main_bp.route('/update/<id>', methods=['POST'])
 def update(id):
-    update_nama = request.get.form('input_nama')
-    update_email = request.get.form('input_email')
+    update_nama = request.form.get('input_nama')
+    update_email = request.form.get('input_email')
 
     supabase.table('user_data')\
     .update({
