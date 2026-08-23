@@ -10,8 +10,16 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    from app.routes.main import main_bp
+    routes_dir = os.path.join(os.path.dirname(__file__), 'routes')
 
-    app.register_blueprint(main_bp)
+    for filename in os.listdir(routes_dir):
+        if filename.endsWith('.py') and filename != '__init__.py':
+            module_name = filename[:-3] 
+            module = importlib.import_module(f'app.routes.{module_name}')
+            blueprint_object_name = f"{module_name}_bp"
+            
+            if hasattr(module, blueprint_object_name):
+                blueprint = getattr(module, blueprint_object_name)
+                app.register_blueprint(blueprint)
 
     return app
