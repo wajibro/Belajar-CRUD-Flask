@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, render_template, request, redirect, url_for
 from supabase import create_client, Client
-from App import supabase
+from app import supabase
 from dotenv import load_dotenv
 
 main_bp = Blueprint('main', __name__) 
