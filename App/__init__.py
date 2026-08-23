@@ -13,7 +13,7 @@ def create_app():
     routes_dir = os.path.join(os.path.dirname(__file__), 'routes')
 
     for filename in os.listdir(routes_dir):
-        if filename.endsWith('.py') and filename != '__init__.py':
+        if filename.endswith('.py') and filename != '__init__.py':
             module_name = filename[:-3] 
             module = importlib.import_module(f'app.routes.{module_name}')
             blueprint_object_name = f"{module_name}_bp"
