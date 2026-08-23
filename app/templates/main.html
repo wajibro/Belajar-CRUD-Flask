@@ -5,10 +5,10 @@
         <h1>Edit Data Cloud #{{ pengguna_edit.id }}</h1>
         <form action="/update/{{ pengguna_edit.id }}" method="POST">
             <label>Nama:</label><br>
-            <input type="text" name="nama" value="{{ pengguna_edit.nama }}" required><br><br>
+            <input type="text" name="input_nama" value="{{ pengguna_edit.input_nama }}" required><br><br>
             
             <label>Email:</label><br>
-            <input type="email" name="email" value="{{ pengguna_edit.email }}" required><br><br>
+            <input type="email" name="input_email" value="{{ pengguna_edit.input_email }}" required><br><br>
             
             <button type="submit">Perbarui</button>
             <a href="{{ url_for('main.index') }}">Batal</a>
@@ -18,10 +18,10 @@
         <h1>Form Input Pengguna (Supabase)</h1>
         <form action="{{ url_for('main.index') }}" method="POST">
             <label>Nama:</label><br>
-            <input type="text" name="nama" required><br><br>
+            <input type="text" name="input_nama" required><br><br>
             
             <label>Email:</label><br>
-            <input type="email" name="email" required><br><br>
+            <input type="email" name="input_email" required><br><br>
             
             <button type="submit">Simpan ke Cloud</button>
         </form>
