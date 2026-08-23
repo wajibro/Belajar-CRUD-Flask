@@ -1,6 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <script>
+        setInterval(function() {
+            fetch(window.location.href)
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const newDoc = parser.parseFromString(html, 'text/html');
+                    
+                    const currentTable = document.querySelector('table tbody');
+                    const newTable = newDoc.querySelector('table tbody');
+                    
+                    if (currentTable && newTable && currentTable.innerHTML !== newTable.innerHTML) {
+                        currentTable.innerHTML = newTable.innerHTML;
+                    }
+                })
+                .catch(err => console.error("Gagal sinkronisasi data:", err));
+        }, 5000);
+    </script>
+
     {% if pengguna_edit %}
         <h1>Edit Data Cloud #{{ pengguna_edit.id }}</h1>
         <form action="/update/{{ pengguna_edit.id }}" method="POST">
