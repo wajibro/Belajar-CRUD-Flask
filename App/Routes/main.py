@@ -3,7 +3,7 @@ from supabase import create_client, Client
 from App import supabase
 from dotenv import load_dotenv
 
-main_bp = Blueprint('profile', __name__) 
+main_bp = Blueprint('main', __name__) 
 
 @main_bp.route('/', methods=['GET', 'POST'])
 def index():
