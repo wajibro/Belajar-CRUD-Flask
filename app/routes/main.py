@@ -19,12 +19,12 @@ def index():
             }).execute()
         return redirect(url_for('main.index'))
 
-    respons = supabase.table('user_data').select('*').order('id', ascending=True)
+    respons = supabase.table('user_data').select('*').order('id', desc=False)
     return render_template('main.html', data_pengguna=respons.data, pengguna_edit=None)
 
 @main_bp.route('/edit/<int:id>', methods=['GET'])
 def edit_form(id):
-    respons_all = supabase.table('user_data').select('*').order('id', ascending=True).execute()
+    respons_all = supabase.table('user_data').select('*').order('id', desc=False).execute()
     respons_single = supabase.table('user_data').select('*').order('id', id).execute()
 
     if not respons_single.data:
