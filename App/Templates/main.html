@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if pengguna_edit %}
+        <h1>Edit Data Cloud #{{ pengguna_edit.id }}</h1>
+        <form action="/update/{{ pengguna_edit.id }}" method="POST">
+            <label>Nama:</label><br>
+            <input type="text" name="nama" value="{{ pengguna_edit.nama }}" required><br><br>
+            
+            <label>Email:</label><br>
+            <input type="email" name="email" value="{{ pengguna_edit.email }}" required><br><br>
+            
+            <button type="submit">Perbarui</button>
+            <a href="{{ url_for('main.index') }}">Batal</a>
+        </form>
+    
+    {% else %}
+        <h1>Form Input Pengguna (Supabase)</h1>
+        <form action="{{ url_for('main.index') }}" method="POST">
+            <label>Nama:</label><br>
+            <input type="text" name="nama" required><br><br>
+            
+            <label>Email:</label><br>
+            <input type="email" name="email" required><br><br>
+            
+            <button type="submit">Simpan ke Cloud</button>
+        </form>
+    {% endif %}
+
+    <hr>
+
+    <h2>Data Tersimpan di Supabase</h2>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Tanggal Dibuat</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in data_pengguna %}
+            <tr>
+                <td>{{ p.id }}</td>
+                <td>{{ p.nama }}</td>
+                <td>{{ p.email }}</td>
+                <td>{{ p.tanggal_dibuat[:16].replace('T', ' ') }}</td>
+                <td>
+                    <a href="/edit/{{ p.id }}">Edit</a> | 
+                    <form action="/delete/{{ p.id }}" method="POST" style="display:inline;" onsubmit="return confirm('Hapus data?')">
+                        <button type="submit">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">Belum ada data di database cloud.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
